@@ -3,7 +3,6 @@ from typing import Callable
 from matplotlib import pyplot as plt
 
 
-
 # ============================================================
 # PARTE 3 - PROPIEDAD CONMUTATIVA
 # ============================================================
@@ -35,30 +34,50 @@ def values(N: int):
 
 
 # ------------------------------------------------------------
-# Suma de mayor a menor módulo
+# 1. Suma de mayor a menor módulo
 # ------------------------------------------------------------
+#
+# Primero ordenamos los términos de menor a mayor.
+# De esta manera, comenzamos sumando los términos más pequeños
+# y terminamos con los términos más grandes.
+#
+# Esto corresponde a "suma de mayor a menor módulo" en el
+# sentido de la acumulación: los términos se incorporan desde
+# el menor hacia el mayor.
 def sum_most_to_least(N: int):
-    vals = values(N)
-    vals.sort(reverse=True)
-    res = 0.0
-    for val in vals:
-        res += val
-    return res
-
-# ------------------------------------------------------------
-# Suma de menor a mayor módulo
-# ------------------------------------------------------------
-def sum_least_to_most(N: int):
     vals = values(N)
     vals.sort()
     res = 0.0
+
     for val in vals:
         res += val
+
     return res
 
+
 # ------------------------------------------------------------
-# Suma randomizada
+# 2. Suma de menor a mayor módulo
 # ------------------------------------------------------------
+#
+# Ordenamos los términos de mayor a menor.
+# De esta manera, comenzamos sumando los términos más grandes.
+def sum_least_to_most(N: int):
+    vals = values(N)
+    vals.sort(reverse=True)
+    res = 0.0
+
+    for val in vals:
+        res += val
+
+    return res
+
+
+# ------------------------------------------------------------
+# 3. Suma randomizada
+# ------------------------------------------------------------
+#
+# Mezclamos aleatoriamente el orden de los términos
+# antes de realizar la suma.
 def sum_shuffle(N: int):
     vals = values(N)
 
@@ -67,34 +86,50 @@ def sum_shuffle(N: int):
     random.shuffle(vals)
 
     res = 0.0
+
     for val in vals:
         res += val
+
     return res
 
+
 # ------------------------------------------------------------
-# Suma de Kahan
+# 4. Suma de Kahan
 # ------------------------------------------------------------
+#
+# La suma de Kahan es una estrategia diseñada para reducir
+# la pérdida de precisión producida al sumar números de
+# punto flotante.
+#
+# "c" guarda una compensación por el error que se va
+# acumulando durante la suma.
 def sum_kahan(N: int):
     vals = values(N)
+
     sum = 0.0
     c = 0.0
+
     for val in vals:
         y = val - c
         t = sum + y
         c = (t - sum) - y
         sum = t
+
     return sum
+
 
 # ------------------------------------------------------------
 # Valor teórico de b_N
 # ------------------------------------------------------------
-# Se utiliza la fórmula cerrada: b_N = N / (N + 1)
 #
-# Este valor se usa como referencia para calcular
+# Utilizamos la fórmula cerrada:
+#
+# b_N = N / (N + 1)
+#
+# Este valor se utiliza como referencia para calcular
 # el error relativo de cada algoritmo.
 def sum_theory(N: int):
     return N / (N+1)
-
 
 
 def main():
@@ -103,51 +138,63 @@ def main():
     # PARTE 3.3
     # ========================================================
     #
-    # Se evalúan los cuatro algoritmos para:
+    # La consigna pide evaluar los cuatro algoritmos para:
+    #
     # N = 10, 20, 30, ..., 10000
     #
-    # y se grafica el error relativo en función de N.
+    # y graficar el error relativo en función de N.
     # ========================================================
 
-    min_val = 10
     max_val = 10000
+    min_val = 10
     step = 10
+
     x_vals = list(range(min_val, max_val + 1, step))
 
-    # Valor teórico para cada N.
+    # Calculamos el valor teórico para cada N.
     theory = [sum_theory(n) for n in x_vals]
 
-    # Se guardan las cuatro funciones de suma.
-    funcs=[sum_most_to_least, sum_least_to_most, sum_shuffle, sum_kahan]
+    # Guardamos las cuatro funciones de suma.
+    funcs = [
+        sum_most_to_least,
+        sum_least_to_most,
+        sum_shuffle,
+        sum_kahan
+    ]
 
-    # Fórmula de error relativo:
-    # E_rel = |b_num - b_exacto| / |b_exacto|
+    # Calculamos el resultado numérico de cada algoritmo.
+    arrs = [[func(n) for n in x_vals] for func in funcs]
+
+    # Fórmula del error relativo:
+    #
+    # E_rel = |b_num - b_teorico| / |b_teorico|
     f: Callable[[tuple[float, float]], float] = \
         lambda t: abs(t[0] - t[1]) / abs(t[1])
 
-    # Resultado numérico de cada algoritmo.
-    arrs=[[func(n) for n in x_vals] for func in funcs]
-
-    # Error relativo de cada algoritmo.
-    errs=[list(map(f, zip(a, theory))) for a in arrs]
+    # Calculamos el error relativo de cada algoritmo.
+    errs = [list(map(f, zip(a, theory))) for a in arrs]
 
 
-    # ------------------------------------------------------------
-    # Gráfico del error relativo en función de cada algoritmo
-    # ------------------------------------------------------------
+    # ========================================================
+    # PARTE 3.3 - Gráfico
+    # ========================================================
+
     plt.plot(x_vals, errs[0], color='red', marker='_')
     plt.plot(x_vals, errs[1], color='blue', marker='s')
     plt.plot(x_vals, errs[2], color='green', marker='^')
     plt.plot(x_vals, errs[3], color='orange', marker='o')
-    plt.show()
 
+    plt.show()
 
 
     # ========================================================
     # PARTE 3.4
     # ========================================================
-    # Se repite el experimento utilizando:
+    #
+    # Ahora repetimos el experimento utilizando:
+    #
     # N = 1000, 2000, 3000, ..., 1000000
+    #
     # para observar si aparecen diferencias a una escala mayor.
     # ========================================================
 
@@ -175,36 +222,41 @@ def main():
     plt.plot(x_vals_large, errs_large[1], color='blue', marker='s')
     plt.plot(x_vals_large, errs_large[2], color='green', marker='^')
     plt.plot(x_vals_large, errs_large[3], color='orange', marker='o')
-    plt.show()
 
+    plt.show()
 
 
     # ========================================================
     # PARTE 3.5
     # ========================================================
     #
-    # Para la suma randomizada, se repite varias veces el cálculo para un 
-    # mismo N grande para observar si siempre se obtiene el mismo resultado.
+    # Para la suma randomizada, la consigna pide repetir
+    # varias veces el cálculo para un mismo N grande y
+    # observar si siempre obtenemos el mismo resultado.
+    #
+    # Para esto utilizamos un N grande y ejecutamos la suma
+    # varias veces.
     # ========================================================
 
     N_random = 1000000
 
-    # Valor teórico para este N
+    # Valor teórico para este N.
     theory_random = sum_theory(N_random)
 
-    # Se repite la suma randomizada varias veces.
+    # Repetimos la suma randomizada varias veces.
     random_results = [
         sum_shuffle(N_random)
         for _ in range(5)
     ]
 
-    # Se calcula el error relativo de cada ejecución.
+    # Calculamos el error relativo de cada ejecución.
     random_errors = [
         abs(result - theory_random) / abs(theory_random)
         for result in random_results
     ]
 
-    # Se muestran los resultados para poder comparar las distintas ejecuciones.
+    # Mostramos los resultados para poder comparar
+    # las distintas ejecuciones.
     print("Resultados de la suma randomizada:")
     for i in range(len(random_results)):
         print(
