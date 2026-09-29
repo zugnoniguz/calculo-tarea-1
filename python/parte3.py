@@ -182,7 +182,6 @@ def main():
     # ========================================================
     # PARTE 3.5
     # ========================================================
-    #
     # Para la suma randomizada, se repite varias veces el cálculo para un 
     # mismo N grande para observar si siempre se obtiene el mismo resultado.
     # ========================================================
@@ -212,6 +211,15 @@ def main():
             f"resultado = {random_results[i]}, "
             f"error relativo = {random_errors[i]}"
         )
+
+    """
+    Resultados de la suma randomizada:
+    Ejecución 1: resultado = 0.9999990000010323, error relativo = 3.230752232408207e-14
+    Ejecución 2: resultado = 0.9999990000010323, error relativo = 3.230752232408207e-14
+    Ejecución 3: resultado = 0.9999990000010323, error relativo = 3.230752232408207e-14
+    Ejecución 4: resultado = 0.9999990000010323, error relativo = 3.230752232408207e-14
+    Ejecución 5: resultado = 0.9999990000010323, error relativo = 3.230752232408207e-14
+    """
 
 
 if __name__ == '__main__':
