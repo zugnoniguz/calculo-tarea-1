@@ -80,14 +80,45 @@ def main():
         arr3 = [sum3(n, b_val) for n in x_vals]
 
         # Se grafican las tres implementaciones.
-        plt.plot(x_vals, arr1, 'r--')
-        plt.plot(x_vals, arr2, 'bs')
-        plt.plot(x_vals, arr3, 'g^')
+        # plt.plot(x_vals, arr1, 'r--')
+        # plt.plot(x_vals, arr2, 'bs')
+        # plt.plot(x_vals, arr3, 'g^')
 
-        plt.title(f"b = {b_val} (int)")
-        plt.xlabel("N")
-        plt.ylabel("a_N")
+        # plt.title(f"b = {b_val} (int)")
+        # plt.xlabel("N")
+        # plt.ylabel("a_N")
 
+        # plt.show()
+
+        plt.figure(figsize=(10, 6))
+
+        plt.plot(
+            x_vals,
+            arr1,
+            label=r"$1 + b^k - b^k$"
+        )
+
+        plt.plot(
+            x_vals,
+            arr2,
+            label=r"$(1 + b^k) - b^k$"
+        )
+
+        plt.plot(
+            x_vals,
+            arr3,
+            label=r"$(1 - b^k) + b^k$"
+        )
+
+        plt.title(
+            f"Propiedad asociativa: valor de $a_N$ para $b = {b_val}$ (entero)"
+        )
+        plt.xlabel("Cantidad de términos (N)")
+        plt.ylabel("Valor calculado de $a_N$")
+
+        plt.legend(title="Asociación de las operaciones")
+        plt.grid(True, alpha=0.3)
+        plt.tight_layout()
         plt.show()
 
 
@@ -112,14 +143,45 @@ def main():
         arr3 = [sum3(n, b_val) for n in x_vals]
 
         # Se grafican las tres implementaciones.
-        plt.plot(x_vals, arr1, 'r--')
-        plt.plot(x_vals, arr2, 'bs')
-        plt.plot(x_vals, arr3, 'g^')
+        # plt.plot(x_vals, arr1, 'r--')
+        # plt.plot(x_vals, arr2, 'bs')
+        # plt.plot(x_vals, arr3, 'g^')
 
-        plt.title(f"b = {b_val} (float)")
-        plt.xlabel("N")
-        plt.ylabel("a_N")
+        # plt.title(f"b = {b_val} (float)")
+        # plt.xlabel("N")
+        # plt.ylabel("a_N")
 
+        # plt.show()
+
+        plt.figure(figsize=(10, 6))
+
+        plt.plot(
+            x_vals,
+            arr1,
+            label=r"$1 + b^k - b^k$"
+        )
+
+        plt.plot(
+            x_vals,
+            arr2,
+            label=r"$(1 + b^k) - b^k$"
+        )
+
+        plt.plot(
+            x_vals,
+            arr3,
+            label=r"$(1 - b^k) + b^k$"
+        )
+
+        plt.title(
+            f"Propiedad asociativa: valor de $a_N$ para $b = {b_val}$ (float)"
+        )
+        plt.xlabel("Cantidad de términos (N)")
+        plt.ylabel("Valor calculado de $a_N$")
+
+        plt.legend(title="Asociación de las operaciones")
+        plt.grid(True, alpha=0.3)
+        plt.tight_layout()
         plt.show()
 
 

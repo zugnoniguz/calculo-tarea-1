@@ -88,8 +88,34 @@ def main():
     errs = [list(map(f, zip(a, theory))) for a in arrs]
 
     # Gráfico del error relativo
-    plt.plot(x_vals, errs[0], color='red', marker='_')
-    plt.plot(x_vals, errs[1], color='blue', marker='s')
+    # plt.plot(x_vals, errs[0], color='red', marker='_')
+    # plt.plot(x_vals, errs[1], color='blue', marker='s')
+    # plt.show()
+
+    plt.figure(figsize=(10, 6))
+
+    plt.plot(
+        x_vals,
+        errs[0],
+        label=r"Sumatoria directa: $\sum 1/[k(k+1)]$"
+    )
+
+    plt.plot(
+        x_vals,
+        errs[1],
+        label=r"Sumatoria telescópica: $\sum(1/k - 1/(k+1))$"
+    )
+
+    plt.title("Error relativo de $b_N$ según su representación")
+    plt.xlabel("Cantidad de términos (N)")
+    plt.ylabel("Error relativo")
+
+    # El error puede variar varios órdenes de magnitud
+    plt.yscale("log")
+
+    plt.legend(title="Representación de la suma")
+    plt.grid(True, alpha=0.3)
+    plt.tight_layout()
     plt.show()
 
 
@@ -119,10 +145,31 @@ def main():
     ]
 
     # Se grafica D_N en función de N
-    plt.plot(x_vals, D)
-    plt.xlabel("N")
-    plt.ylabel("D_N")
-    plt.title("Diferencia entre las dos representaciones de c_N")
+    # plt.plot(x_vals, D)
+    # plt.xlabel("N")
+    # plt.ylabel("D_N")
+    # plt.title("Diferencia entre las dos representaciones de c_N")
+    # plt.show()
+    
+    plt.figure(figsize=(10, 6))
+
+    plt.plot(
+        x_vals,
+        D,
+        label=r"$D_N = |c_N^{(1)} - c_N^{(2)}|$"
+    )
+
+    plt.title(
+        "Diferencia numérica entre las representaciones de $c_N$"
+    )
+    plt.xlabel("Cantidad de términos (N)")
+    plt.ylabel(r"Diferencia absoluta $D_N$")
+
+    plt.yscale("log")
+
+    plt.legend()
+    plt.grid(True, alpha=0.3)
+    plt.tight_layout()
     plt.show()
 
 
@@ -150,10 +197,32 @@ def main():
     ]
 
     # Se grafica la diferencia entre ambas representaciones
-    plt.plot(x_vals, b_bonus_diff)
-    plt.xlabel("N")
+    # plt.plot(x_vals, b_bonus_diff)
+    # plt.xlabel("N")
+    # plt.ylabel("Diferencia absoluta")
+    # plt.title("Diferencia entre las dos representaciones de b_N")
+    # plt.show()
+
+
+    plt.figure(figsize=(10, 6))
+
+    plt.plot(
+        x_vals,
+        b_bonus_diff,
+        label=r"$|[1 - 1/(N+1)] - [N/(N+1)]|$"
+    )
+
+    plt.title(
+        "Diferencia numérica entre dos formas cerradas de $b_N$"
+    )
+    plt.xlabel("Cantidad de términos (N)")
     plt.ylabel("Diferencia absoluta")
-    plt.title("Diferencia entre las dos representaciones de b_N")
+
+    plt.yscale("log")
+
+    plt.legend()
+    plt.grid(True, alpha=0.3)
+    plt.tight_layout()
     plt.show()
 
 
@@ -186,10 +255,32 @@ def main():
     ]
 
     # Se grafica la diferencia en función de k
-    plt.plot(k_vals, c_term_diff)
-    plt.xlabel("k")
-    plt.ylabel("Diferencia absoluta")
-    plt.title("Diferencia entre las representaciones de los términos de c_N")
+    # plt.plot(k_vals, c_term_diff)
+    # plt.xlabel("k")
+    # plt.ylabel("Diferencia absoluta")
+    # plt.title("Diferencia entre las representaciones de los términos de c_N")
+    # plt.show()
+
+
+    plt.figure(figsize=(10, 6))
+
+    plt.plot(
+        k_vals,
+        c_term_diff,
+        label=r"$|\sqrt{k^2+1}-k - 1/(\sqrt{k^2+1}+k)|$"
+    )
+
+    plt.title(
+        "Pérdida de precisión en los términos de $c_N$"
+    )
+    plt.xlabel("Índice del término (k)")
+    plt.ylabel("Diferencia absoluta entre las representaciones")
+
+    plt.yscale("log")
+
+    plt.legend()
+    plt.grid(True, alpha=0.3)
+    plt.tight_layout()
     plt.show()
 
 

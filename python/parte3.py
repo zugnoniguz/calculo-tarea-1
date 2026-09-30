@@ -63,7 +63,7 @@ def sum_shuffle(N: int):
     vals = values(N)
 
     # Se fija la semilla para que el resultado sea reproducible.
-    random.seed(67)
+    random.seed(67) 
     random.shuffle(vals)
 
     res = 0.0
@@ -135,10 +135,46 @@ def main():
     # ------------------------------------------------------------
     # Gráfico del error relativo en función de cada algoritmo
     # ------------------------------------------------------------
-    plt.plot(x_vals, errs[0], color='red', marker='_')
-    plt.plot(x_vals, errs[1], color='blue', marker='s')
-    plt.plot(x_vals, errs[2], color='green', marker='^')
-    plt.plot(x_vals, errs[3], color='orange', marker='o')
+    # plt.plot(x_vals, errs[0], color='red', marker='_')
+    # plt.plot(x_vals, errs[1], color='blue', marker='s')
+    # plt.plot(x_vals, errs[2], color='green', marker='^')
+    # plt.plot(x_vals, errs[3], color='orange', marker='o')
+    # plt.show()
+
+
+    plt.figure(figsize=(10, 6))
+
+    plt.plot(
+        x_vals,
+        errs[0],
+        label="Suma de mayor a menor"
+    )
+
+    plt.plot(
+        x_vals,
+        errs[1],
+        label="Suma de menor a mayor"
+    )
+
+    plt.plot(
+        x_vals,
+        errs[2],
+        label="Suma en orden aleatorio"
+    )
+
+    plt.plot(
+        x_vals,
+        errs[3],
+        label="Suma de Kahan"
+    )
+
+    plt.title("Error relativo según el método de suma")
+    plt.xlabel("Cantidad de términos (N)")
+    plt.ylabel("Error relativo")
+
+    plt.legend(title="Método de suma")
+    plt.grid(True, alpha=0.3)
+    plt.tight_layout()
     plt.show()
 
 
@@ -171,10 +207,45 @@ def main():
 
 
     # Gráfico del error relativo para valores grandes de N.
-    plt.plot(x_vals_large, errs_large[0], color='red', marker='_')
-    plt.plot(x_vals_large, errs_large[1], color='blue', marker='s')
-    plt.plot(x_vals_large, errs_large[2], color='green', marker='^')
-    plt.plot(x_vals_large, errs_large[3], color='orange', marker='o')
+    # plt.plot(x_vals_large, errs_large[0], color='red', marker='_')
+    # plt.plot(x_vals_large, errs_large[1], color='blue', marker='s')
+    # plt.plot(x_vals_large, errs_large[2], color='green', marker='^')
+    # plt.plot(x_vals_large, errs_large[3], color='orange', marker='o')
+    # plt.show()
+    
+    plt.figure(figsize=(10, 6))
+
+    plt.plot(
+        x_vals_large,
+        errs_large[0],
+        label="Suma de menor a mayor"
+    )
+
+    plt.plot(
+        x_vals_large,
+        errs_large[1],
+        label="Suma de mayor a menor"
+    )
+
+    plt.plot(
+        x_vals_large,
+        errs_large[2],
+        label="Suma en orden aleatorio"
+    )
+
+    plt.plot(
+        x_vals_large,
+        errs_large[3],
+        label="Suma de Kahan"
+    )
+
+    plt.title("Error relativo según el método de suma — escala grande")
+    plt.xlabel("Cantidad de términos (N)")
+    plt.ylabel("Error relativo")
+
+    plt.legend(title="Método de suma")
+    plt.grid(True, alpha=0.3)
+    plt.tight_layout()
     plt.show()
 
 
